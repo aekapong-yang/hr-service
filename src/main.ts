@@ -1,9 +1,9 @@
 import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
-import { AxiosExceptionFilter } from "./core/filters/axios-exception.filter";
-import { HttpExceptionFilter } from "./core/filters/http-exception.filter";
-import { DefaultPostStatusInterceptor } from "./core/interceptors/default-post-status.interceptor";
+import { AxiosExceptionFilter } from "./shared/filter/axios-exception.filter";
+import { HttpExceptionFilter } from "./shared/filter/http-exception.filter";
+import { DefaultPostStatusInterceptor } from "./shared/interceptor/default-post-status.interceptor";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
