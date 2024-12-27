@@ -28,6 +28,7 @@ export class PostLeaveAddRequest {
   @IsDateString()
   endDate: Date;
 
+  @IsOptional()
   reason: string;
 }
 

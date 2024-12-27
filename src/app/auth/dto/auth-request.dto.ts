@@ -5,6 +5,10 @@ export class GetTokenRequest {
   readonly code: string;
 }
 
+export class PostAccessTokenRequest {
+  @IsNotBlank()
+  readonly accessToken: string;
+}
 
 export class PostRefreshTokenRequest {
   @IsNotBlank()

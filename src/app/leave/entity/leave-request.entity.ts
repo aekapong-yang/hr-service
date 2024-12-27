@@ -1,4 +1,4 @@
-import { Column, Entity, Generated, PrimaryColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, Generated, PrimaryColumn } from "typeorm";
 
 @Entity({ name: "leave_request" })
 export class LeaveRequest {
@@ -35,4 +35,15 @@ export class LeaveRequest {
 
   @Column({ name: "updated_at", type: "datetime" })
   updatedAt: Date;
+
+  @BeforeInsert()
+  setCreatedAt() {
+    this.createdAt = new Date();
+  }
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  setUpdatedAt() {
+    this.updatedAt = new Date();
+  }
 }

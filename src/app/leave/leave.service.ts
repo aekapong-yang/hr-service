@@ -1,12 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { plainToInstance } from "class-transformer";
-import {
-  LEAVE_REQUEST,
-  LeaveStatus
-} from "src/core/constants/constant";
+import { LEAVE_REQUEST, LeaveStatus } from "src/core/constants/constant";
 import { ErrorCodes } from "src/core/constants/error-code";
 import { BusinessException } from "src/core/exceptions/business.exception";
+import { ApiContext } from "src/core/providers/api-context.service";
 import { FindManyOptions, MoreThanOrEqual, Repository } from "typeorm";
 import {
   GetLeaveAllRequest,
@@ -15,19 +13,16 @@ import {
 } from "./dto/leave-request.dto";
 import { GetLeaveAllResponse } from "./dto/leave-response.dto";
 import { LeaveRequest } from "./entity/leave-request.entity";
-import { ApiContext } from "src/core/providers/api-context.service";
 
 @Injectable()
 export class LeaveService {
   constructor(
     @InjectRepository(LeaveRequest)
     private readonly leaveRepository: Repository<LeaveRequest>,
-    private readonly apiContext: ApiContext,
+    // private readonly apiContext: ApiContext,
   ) {}
 
   async getLeaveAll(request: GetLeaveAllRequest): Promise<LeaveRequest[]> {
-    console.log(this.apiContext.getUserId());
-    
     const query: FindManyOptions<LeaveRequest> = {
       where: { startDate: MoreThanOrEqual(request.date) },
       order: { startDate: request.sortBy },
@@ -44,13 +39,17 @@ export class LeaveService {
   }
 
   async postLeaveAdd(request: PostLeaveAddRequest): Promise<void> {
-    await this.leaveRepository.insert({
+    // console.log(this.apiContext.userId);
+    console.log(request);
+    
+    const insert = this.leaveRepository.create({
       ...request,
+      userId:"ben1",
       status: LeaveStatus.APPROVED,
       createdBy: "ben",
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
+
+    await this.leaveRepository.insert(insert);
   }
 
   public async putLeaveUpdate(request: PutLeaveUpdateRequest): Promise<void> {

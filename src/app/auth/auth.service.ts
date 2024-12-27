@@ -4,12 +4,12 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { UserStatus } from "src/core/constants/constant";
 import { ErrorCodes } from "src/core/constants/error-code";
 import { BusinessException } from "src/core/exceptions/business.exception";
-import { ApiContext } from "src/core/providers/api-context.service";
 import { OAuthService } from "src/core/providers/oauth.service";
 import { TokenService } from "src/core/providers/token.service";
 import { Repository } from "typeorm";
 import {
   GetTokenRequest,
+  PostAccessTokenRequest,
   PostRefreshTokenRequest,
 } from "./dto/auth-request.dto";
 import { TokenResponse } from "./dto/auth-response.dto";
@@ -22,7 +22,6 @@ export class AuthService {
     private readonly authRepository: Repository<Auth>,
     private readonly tokenService: TokenService,
     private readonly oAuthService: OAuthService,
-    private readonly apiContext: ApiContext,
     private readonly configService: ConfigService,
   ) {}
 
@@ -76,8 +75,20 @@ export class AuthService {
     return token;
   }
 
-  async logout(): Promise<void> {
-    console.log("logout success" + this.apiContext.getUserId());
+  async logout(request: PostAccessTokenRequest): Promise<void> {
+    const { accessToken } = request;
+    const { userId } = await this.tokenService.verifyToken(accessToken);
+    const auth = await this.authRepository.findOneBy({ userId, accessToken });
+    if (!auth) {
+      throw new BusinessException(ErrorCodes.INVALID_ACCESS_TOKEN);
+    }
+
+    const update = this.authRepository.create({
+      ...auth,
+      accessToken: null,
+      refreshToken: null,
+    });
+    this.authRepository.save(update);
   }
 
   async refreshToken(request: PostRefreshTokenRequest): Promise<TokenResponse> {
@@ -90,13 +101,13 @@ export class AuthService {
 
     const token: TokenResponse = await this.tokenService.generateToken(auth);
 
-    this.authRepository.save({
+    const update = this.authRepository.create({
       ...auth,
-      updatedAt: new Date(),
       accessToken: token.accessToken,
       refreshToken: token.refreshToken,
     });
 
+    this.authRepository.save(update);
     return token;
   }
 }

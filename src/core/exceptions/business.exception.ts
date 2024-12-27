@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus } from "@nestjs/common";
-import { ErrorCode } from "../constants/error-code";
+import { Code, ErrorCode } from "../constants/error-code";
 
 export class BusinessException extends HttpException {
-  readonly code: string;
+  readonly code: Code;
   readonly httpStatus: HttpStatus;
   constructor({ code, message, httpStatus }: ErrorCode, ...params: string[]) {
     super(message(...params), httpStatus);
