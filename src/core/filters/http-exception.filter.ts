@@ -7,9 +7,8 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { Request, Response } from "express";
-import { Code } from "../constants/error-code";
-import { BusinessException } from "../exceptions/business.exception";
 import { ErrorResponse, GlobalErrorMessage } from "../constants/constant";
+import { BusinessException } from "../exceptions/business.exception";
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {

@@ -18,8 +18,7 @@ export class ApiContext {
     private readonly jwtService: JwtService,
   ) {
     const payload = this.extractAccessToken(request);
-    console.log("ApiContext");
-    
+
     this.userId = payload?.userId;
     this.username = payload?.username;
     this.email = payload?.email;

@@ -1,8 +1,7 @@
 import {
   registerDecorator,
   ValidationArguments,
-  ValidationOptions,
-  Validator,
+  ValidationOptions
 } from "class-validator";
 
 export function IsNotBlank(validationOptions?: ValidationOptions) {
