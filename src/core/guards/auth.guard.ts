@@ -21,8 +21,7 @@ export class AuthGuard implements CanActivate {
     }
 
     const request = context.switchToHttp().getRequest<Request>();
-    const payload = await this.tokenService.extractAccessToken(request);
-
+    const payload = await this.tokenService.verifyAccessToken(request);
     return !!payload;
   }
 }

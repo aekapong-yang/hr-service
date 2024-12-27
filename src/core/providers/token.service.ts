@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { JsonWebTokenError, JwtService, TokenExpiredError } from "@nestjs/jwt";
+import { Request } from "express";
 import { Payload, TokenResponse } from "src/app/auth/dto/auth-response.dto";
 import { Auth } from "src/app/auth/entity/auth.entity";
 import { ErrorCodes } from "../constants/error-code";
@@ -49,4 +50,23 @@ export class TokenService {
       throw new BusinessException(ErrorCodes.INVALID_ACCESS_TOKEN);
     }
   }
+
+  async verifyAccessToken(request: Request): Promise<Payload> {
+    const authHeader = request.headers.authorization;
+
+    if (!authHeader) {
+      throw new BusinessException(ErrorCodes.INVALID_ACCESS_TOKEN);
+    }
+
+    if (!authHeader.startsWith("Bearer ")) {
+      throw new BusinessException(
+        ErrorCodes.INVALID_ACCESS_TOKEN,
+        'Authorization header must start with "Bearer "',
+      );
+    }
+
+    const accessToken = authHeader.slice(7);
+    return await this.verifyToken(accessToken);
+  }
+  
 }
