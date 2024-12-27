@@ -1,10 +1,32 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+import { APP_GUARD } from "@nestjs/core";
+import { JwtModule } from "@nestjs/jwt";
+import { AuthModule } from "./app/auth/auth.module";
+import { LeaveModule } from "./app/leave/leave.module";
+import DBConfig from "./core/config/db.config";
+import { AuthGuard } from "./core/guards/auth.guard";
+import { ApiContext } from "./core/providers/api-context.service";
+import { TokenService } from "./core/providers/token.service";
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot(),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET_KEY,
+    }),
+    AuthModule,
+    LeaveModule,
+    DBConfig,
+  ],
+  providers: [
+    TokenService,
+    ApiContext,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AppModule {}
