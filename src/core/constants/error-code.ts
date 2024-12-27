@@ -1,4 +1,5 @@
 import { HttpStatus } from "@nestjs/common";
+import { BEARER } from "./constant";
 
 export type Code =
   | "invalid_parameter"
@@ -21,6 +22,12 @@ export const ErrorCodes = {
     httpStatus: HttpStatus.BAD_REQUEST,
   } as ErrorCode,
 
+  INVALID_USER_INACTIVE: {
+    code: "invalid_parameter",
+    message: (param: string) => `"${param}" is inactive.`,
+    httpStatus: HttpStatus.BAD_REQUEST,
+  } as ErrorCode,
+
   NOT_FOUND: {
     code: "not_found",
     message: (resource: string, id: string) =>
@@ -31,6 +38,12 @@ export const ErrorCodes = {
   INVALID_ACCESS_TOKEN: {
     code: "unauthorized",
     message: (message: string) => message ?? "Invalid Access token",
+    httpStatus: HttpStatus.UNAUTHORIZED,
+  } as ErrorCode,
+
+  INVALID_BEARER_START_WITH: {
+    code: "unauthorized",
+    message: () =>  `Authorization header must start with "${BEARER}"`,
     httpStatus: HttpStatus.UNAUTHORIZED,
   } as ErrorCode,
 

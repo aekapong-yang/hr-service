@@ -6,7 +6,6 @@ import { AuthModule } from "./app/auth/auth.module";
 import { LeaveModule } from "./app/leave/leave.module";
 import DBConfig from "./core/config/db.config";
 import { AuthGuard } from "./core/guards/auth.guard";
-import { ApiContext } from "./core/providers/api-context.service";
 import { TokenService } from "./core/providers/token.service";
 
 @Module({
@@ -22,7 +21,6 @@ import { TokenService } from "./core/providers/token.service";
   ],
   providers: [
     TokenService,
-    ApiContext,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,

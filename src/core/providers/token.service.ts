@@ -3,6 +3,7 @@ import { JsonWebTokenError, JwtService, TokenExpiredError } from "@nestjs/jwt";
 import { Request } from "express";
 import { Payload, TokenResponse } from "src/app/auth/dto/auth-response.dto";
 import { Auth } from "src/app/auth/entity/auth.entity";
+import { BEARER } from "../constants/constant";
 import { ErrorCodes } from "../constants/error-code";
 import { BusinessException } from "../exceptions/business.exception";
 
@@ -58,15 +59,11 @@ export class TokenService {
       throw new BusinessException(ErrorCodes.INVALID_ACCESS_TOKEN);
     }
 
-    if (!authHeader.startsWith("Bearer ")) {
-      throw new BusinessException(
-        ErrorCodes.INVALID_ACCESS_TOKEN,
-        'Authorization header must start with "Bearer "',
-      );
+    if (!authHeader.startsWith(BEARER)) {
+      throw new BusinessException(ErrorCodes.INVALID_BEARER_START_WITH);
     }
 
     const accessToken = authHeader.slice(7);
     return await this.verifyToken(accessToken);
   }
-  
 }

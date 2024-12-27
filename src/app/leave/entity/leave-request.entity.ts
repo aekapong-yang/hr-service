@@ -6,9 +6,6 @@ export class LeaveRequest {
   @PrimaryColumn({ name: "leave_id" })
   leaveId: string;
 
-  @Column({ name: "user_id" })
-  userId: string;
-
   @Column({ name: "leave_type" })
   leaveType: string;
 

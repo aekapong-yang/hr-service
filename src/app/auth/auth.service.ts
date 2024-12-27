@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UserStatus } from "src/core/constants/constant";
 import { ErrorCodes } from "src/core/constants/error-code";
@@ -22,7 +21,6 @@ export class AuthService {
     private readonly authRepository: Repository<Auth>,
     private readonly tokenService: TokenService,
     private readonly oAuthService: OAuthService,
-    private readonly configService: ConfigService,
   ) {}
 
   login() {
@@ -40,11 +38,11 @@ export class AuthService {
   async token(request: GetTokenRequest): Promise<TokenResponse> {
     const { code } = request;
     let auth: Auth;
-    if (this.configService.get<boolean>("MS_AUTH_BYPASS", false)) {
+    if (process.env.MS_AUTH_BYPASS === "true") {
       auth = this.authRepository.create({
         userId: code,
         username: code,
-        email: `${code}@gmail.com`,
+        email: `${code}@ie-solutions.co.th`,
         status: UserStatus.ACTIVE,
       });
     } else {

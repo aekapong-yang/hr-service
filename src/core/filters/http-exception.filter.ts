@@ -9,6 +9,7 @@ import {
 import { Request, Response } from "express";
 import { Code } from "../constants/error-code";
 import { BusinessException } from "../exceptions/business.exception";
+import { ErrorResponse, GlobalErrorMessage } from "../constants/constant";
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -45,13 +46,4 @@ function toErrorResponse(exception: HttpException): ErrorResponse {
   }
 
   return { code: "general_error", message: "An unexpected error occurred" };
-}
-
-interface ErrorResponse {
-  code: Code;
-  message: string;
-}
-
-interface GlobalErrorMessage {
-  message: string;
 }

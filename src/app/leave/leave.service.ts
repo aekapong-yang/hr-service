@@ -19,7 +19,7 @@ export class LeaveService {
   constructor(
     @InjectRepository(LeaveRequest)
     private readonly leaveRepository: Repository<LeaveRequest>,
-    // private readonly apiContext: ApiContext,
+    private readonly apiContext: ApiContext,
   ) {}
 
   async getLeaveAll(request: GetLeaveAllRequest): Promise<LeaveRequest[]> {
@@ -39,14 +39,10 @@ export class LeaveService {
   }
 
   async postLeaveAdd(request: PostLeaveAddRequest): Promise<void> {
-    // console.log(this.apiContext.userId);
-    console.log(request);
-    
     const insert = this.leaveRepository.create({
       ...request,
-      userId:"ben1",
       status: LeaveStatus.APPROVED,
-      createdBy: "ben",
+      createdBy: this.apiContext.userId,
     });
 
     await this.leaveRepository.insert(insert);

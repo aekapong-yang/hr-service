@@ -1,3 +1,5 @@
+import { Code } from "./error-code";
+
 export enum DateType {
   YEAR = "YEAR",
   MONTH = "MONTH",
@@ -29,3 +31,18 @@ export enum UserStatus {
   INACTIVE = "INACTIVE",
 }
 // =========== End Utils Section =========================
+
+// =========== Start Auth Section =========================
+export const BEARER: string = "Bearer ";
+// =========== End Auth Section =========================
+
+// =========== Start Error Section =========================
+export interface ErrorResponse {
+  code: Code;
+  message: string;
+}
+
+export interface GlobalErrorMessage {
+  message: string;
+}
+// =========== End Error Section =========================
