@@ -1,6 +1,6 @@
 import { HttpStatus } from "@nestjs/common";
 import { BEARER } from "../constant";
-import { IErrorCode } from "./error-code";
+import { IErrorCode } from './error-code.d';
 
 export const ErrorCode = {
   INVALID_PARAMETER: {

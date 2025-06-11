@@ -1,9 +1,9 @@
-import { IsDateString, IsIn, IsOptional } from "class-validator";
-import { LEAVE_TYPE_IN } from "src/shared/constants/constant";
+import { IsDateString, IsEnum, IsOptional } from "class-validator";
+import { LeaveType } from "src/shared/constants/enum-constant";
 
 export class PostLeaveAddRequest {
-  @IsIn(LEAVE_TYPE_IN)
-  leaveType: string;
+  @IsEnum(LeaveType)
+  leaveType: LeaveType;
 
   @IsDateString()
   startDate: Date;

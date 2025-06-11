@@ -1,30 +1,33 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { plainToInstance } from "class-transformer";
-import { ApiStore, LEAVE_REQUEST } from "src/shared/constants/constant";
 import { BusinessException } from "src/shared/exception/business.exception";
 import { Repository } from "typeorm";
-
-import { ClsService } from "nestjs-cls";
 import { ErrorCode } from "src/shared/constants/error-code/error-code";
 import { GetLeaveAllResponse } from "../dto/response/get-leave-all.response";
 import { LeaveRequest } from "../entity/leave-request.entity";
+import { ApiResponse } from "src/shared/dto/api-response";
+import { log } from "console";
 
 @Injectable()
 export class GetLeaveByIdService
-  implements BaseService<string, GetLeaveAllResponse>
+  implements BaseService<string, Promise<ApiResponse<GetLeaveAllResponse>>>
 {
   constructor(
     @InjectRepository(LeaveRequest)
     private readonly leaveRepository: Repository<LeaveRequest>,
-    private readonly cls: ClsService<ApiStore>,
   ) {}
 
-  async execute(leaveId: string): Promise<GetLeaveAllResponse> {
+  async execute(leaveId: string): Promise<ApiResponse<GetLeaveAllResponse>> {
     const leaveRequest = await this.leaveRepository.findOneBy({ leaveId });
     if (!leaveRequest) {
-      throw new BusinessException(ErrorCode.NOT_FOUND, LEAVE_REQUEST, leaveId);
+      throw new BusinessException(
+        ErrorCode.NOT_FOUND,
+        `Leave request ${leaveId}`,
+      );
     }
-    return plainToInstance(GetLeaveAllResponse, leaveRequest);
+    const response = plainToInstance(GetLeaveAllResponse, leaveRequest);
+    console.log(response);
+    return ApiResponse.success(response);
   }
 }

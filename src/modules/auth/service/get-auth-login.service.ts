@@ -1,10 +1,12 @@
 import { Injectable } from "@nestjs/common";
+import { GetAuthTokenResponse } from "../dto/response/get-auth-token-response";
+import { ApiResponse } from "src/shared/dto/api-response";
 
 @Injectable()
 export class GetAuthLoginService {
   constructor() {}
 
-  execute() {
+  execute(): ApiResponse<GetAuthTokenResponse> {
     const AUTH_PARAMS: URLSearchParams = new URLSearchParams({
       client_id: process.env.MS_CLIENT_ID,
       redirect_url: process.env.MS_REDIRECT_URL,
@@ -13,6 +15,6 @@ export class GetAuthLoginService {
       scope: process.env.MS_SCOPE,
     });
 
-    return { url: `${process.env.MS_URL}/authorize?${AUTH_PARAMS}` };
+    return ApiResponse.success({ url: `${process.env.MS_URL}/authorize?${AUTH_PARAMS}` });
   }
 }

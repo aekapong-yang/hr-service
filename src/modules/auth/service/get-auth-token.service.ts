@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { UserStatus } from "src/shared/constants/constant";
-import { OAuthService } from "src/shared/provider/oauth.service";
+import { UserStatus } from "src/shared/constants/enum-constant";
+import { ApiResponse } from "src/shared/dto/api-response";
+import { OAuthService } from "src/shared/provider/microsoft/oauth.service";
 import { TokenService } from "src/shared/provider/token.service";
 import { Repository } from "typeorm";
 import { GetAuthTokenRequest } from "../dto/request/get-auth-token.request";
@@ -10,7 +11,7 @@ import { Auth } from "../entity/auth.entity";
 
 @Injectable()
 export class GetAuthTokenService
-  implements BaseService<GetAuthTokenRequest, TokenResponse>
+  implements BaseService<GetAuthTokenRequest, Promise<ApiResponse<TokenResponse>>>
 {
   constructor(
     @InjectRepository(Auth)
@@ -19,7 +20,7 @@ export class GetAuthTokenService
     private readonly oAuthService: OAuthService,
   ) {}
 
-  async execute(request: GetAuthTokenRequest): Promise<TokenResponse> {
+  async execute(request: GetAuthTokenRequest): Promise<ApiResponse<TokenResponse>> {
     const { code } = request;
     let auth: Auth;
     if (process.env.MS_AUTH_BYPASS === "true") {
@@ -54,6 +55,7 @@ export class GetAuthTokenService
     });
 
     await this.authRepository.save(create);
-    return token;
+    
+    return ApiResponse.success(token);
   }
 }

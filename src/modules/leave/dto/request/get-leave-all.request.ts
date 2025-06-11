@@ -1,17 +1,18 @@
-import { IsDateString, IsEnum, IsIn, IsOptional } from "class-validator";
-import { DateType, LEAVE_TYPE_IN, OrderBy } from "src/shared/constants/constant";
+import { IsDateString, IsEnum, IsOptional } from "class-validator";
+import { DateType, LeaveType, OrderBy } from "src/shared/constants/enum-constant";
 
 export class GetLeaveAllRequest {
   @IsEnum(DateType)
-  dateType: DateType = DateType.MONTH;
+  dateType: DateType;
 
   @IsDateString()
   date: Date;
 
   @IsOptional()
-  @IsIn(LEAVE_TYPE_IN)
+  @IsEnum(LeaveType)
   leaveType: string;
 
+  @IsOptional()
   sortCol: string;
 
   @IsEnum(OrderBy)

@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ErrorCode } from "src/shared/constants/error-code/error-code";
+import { ApiResponse } from "src/shared/dto/api-response";
 import { BusinessException } from "src/shared/exception/business.exception";
 import { TokenService } from "src/shared/provider/token.service";
 import { Repository } from "typeorm";
@@ -10,7 +11,7 @@ import { Auth } from "../entity/auth.entity";
 
 @Injectable()
 export class PostAuthRefreshService
-  implements BaseService<PostAuthRefreshRequest, TokenResponse>
+  implements BaseService<PostAuthRefreshRequest, Promise<ApiResponse<TokenResponse>>>
 {
   constructor(
     @InjectRepository(Auth)
@@ -18,7 +19,7 @@ export class PostAuthRefreshService
     private readonly tokenService: TokenService,
   ) {}
 
-  async execute(request: PostAuthRefreshRequest): Promise<TokenResponse> {
+  async execute(request: PostAuthRefreshRequest): Promise<ApiResponse<TokenResponse>> {
     const { refreshToken } = request;
     const { userId } = await this.tokenService.verifyToken(refreshToken);
     const auth = await this.authRepository.findOneBy({ userId, refreshToken });
@@ -35,6 +36,6 @@ export class PostAuthRefreshService
     });
 
     this.authRepository.save(update);
-    return token;
+    return ApiResponse.success(token);
   }
 }

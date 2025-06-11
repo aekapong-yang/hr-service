@@ -1,30 +1,35 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { ApiStore } from "src/shared/constants/constant";
-import { FindManyOptions, MoreThanOrEqual, Repository } from "typeorm";
-
-import { ClsService } from "nestjs-cls";
 import { GetLeaveAllRequest } from "../dto/request/get-leave-all.request";
+import { GetLeaveAllResponse } from "../dto/response/get-leave-all.response";
 import { LeaveRequest } from "../entity/leave-request.entity";
+import { LeaveRequestRepository } from "../repository/leave-request.repository";
+import { ApiResponse } from "src/shared/dto/api-response";
 
 @Injectable()
 export class GetLeaveAllService
-  implements BaseService<GetLeaveAllRequest, LeaveRequest[]>
+  implements
+    BaseService<GetLeaveAllRequest, Promise<ApiResponse<GetLeaveAllResponse[]>>>
 {
   constructor(
-    @InjectRepository(LeaveRequest)
-    private readonly leaveRepository: Repository<LeaveRequest>,
-    private readonly cls: ClsService<ApiStore>,
+    private readonly leaveRequestRepository: LeaveRequestRepository,
   ) {}
 
-  async execute(request: GetLeaveAllRequest): Promise<LeaveRequest[]> {
-    console.log(this.cls.get("userId"));
-
-    const query: FindManyOptions<LeaveRequest> = {
-      where: { startDate: MoreThanOrEqual(request.date) },
-      order: { startDate: request.sortBy },
-    };
-    return await this.leaveRepository.find(query);
+  async execute(
+    request: GetLeaveAllRequest,
+  ): Promise<ApiResponse<GetLeaveAllResponse[]>> {
+    const leaves = await this.leaveRequestRepository.findLeaveAll(request);
+    return ApiResponse.success(leaves.map(this.toGetLeaveAllResponse));
   }
-  
+
+  private toGetLeaveAllResponse(leave: LeaveRequest): GetLeaveAllResponse {
+    return {
+      leaveId: leave.leaveId,
+      leaveType: leave.leaveType,
+      userId: leave.userId,
+      username: leave.username,
+      startDate: leave.startDate,
+      endDate: leave.endDate,
+      reason: leave.reason,
+    };
+  }
 }
