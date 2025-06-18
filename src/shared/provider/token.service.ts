@@ -5,10 +5,10 @@ import {
   Payload,
   TokenResponse,
 } from "src/modules/auth/dto/response/auth-response.dto";
-import { Auth } from "src/modules/auth/entity/auth.entity";
-import { BEARER } from "../constants/constant";
+import { BEARER } from "../constants/app-constant";
 import { ErrorCode } from "../constants/error-code/error-code";
 import { BusinessException } from "../exception/business.exception";
+import { Auth } from "../model/auth.entity";
 
 @Injectable()
 export class TokenService {

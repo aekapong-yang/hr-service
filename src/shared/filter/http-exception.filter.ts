@@ -7,7 +7,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { Request, Response } from "express";
-import { ErrorResponse, GlobalErrorMessage } from "../constants/constant";
+import { ErrorResponse, GlobalErrorMessage } from "../constants/app-constant";
 import { BusinessException } from "../exception/business.exception";
 
 @Catch(HttpException)

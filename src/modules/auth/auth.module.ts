@@ -1,10 +1,10 @@
 import { HttpModule } from "@nestjs/axios";
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { Auth } from "src/shared/model/auth.entity";
 import { OAuthService } from "src/shared/provider/microsoft/oauth.service";
 import { TokenService } from "src/shared/provider/token.service";
 import { AuthController } from "./auth.controller";
-import { Auth } from "./entity/auth.entity";
 import { GetAuthLoginService } from "./service/get-auth-login.service";
 import { GetAuthTokenService } from "./service/get-auth-token.service";
 import { PostAuthLogoutService } from "./service/post-auth-logout.service";

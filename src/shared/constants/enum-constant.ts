@@ -10,15 +10,6 @@ export enum OrderBy {
   DESC = "DESC",
 }
 
-export enum LeaveType {
-  ML = "ML",
-  MLT = "MLT",
-  OL = "OL",
-  PL = "PL",
-  SL = "SL",
-  VL = "VL",
-}
-
 export enum LeaveStatus {
   PENDING = "PENDING",
   APPROVED = "APPROVED",
@@ -28,4 +19,8 @@ export enum LeaveStatus {
 export enum UserStatus {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
+}
+
+export enum SettingGroup {
+  LEAVE_TYPE = "LEAVE_TYPE",
 }

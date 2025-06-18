@@ -1,13 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { plainToInstance } from "class-transformer";
-import { BusinessException } from "src/shared/exception/business.exception";
-import { Repository } from "typeorm";
 import { ErrorCode } from "src/shared/constants/error-code/error-code";
-import { GetLeaveAllResponse } from "../dto/response/get-leave-all.response";
-import { LeaveRequest } from "../entity/leave-request.entity";
 import { ApiResponse } from "src/shared/dto/api-response";
-import { log } from "console";
+import { BusinessException } from "src/shared/exception/business.exception";
+import { LeaveRequest } from "src/shared/model/leave-request.entity";
+import { Repository } from "typeorm";
+import { GetLeaveAllResponse } from "../dto/response/get-leave-all.response";
 
 @Injectable()
 export class GetLeaveByIdService

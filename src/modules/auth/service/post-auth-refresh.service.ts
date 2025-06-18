@@ -3,11 +3,11 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ErrorCode } from "src/shared/constants/error-code/error-code";
 import { ApiResponse } from "src/shared/dto/api-response";
 import { BusinessException } from "src/shared/exception/business.exception";
+import { Auth } from "src/shared/model/auth.entity";
 import { TokenService } from "src/shared/provider/token.service";
 import { Repository } from "typeorm";
 import { PostAuthRefreshRequest } from "../dto/request/post-auth-refresh.request";
 import { TokenResponse } from "../dto/response/auth-response.dto";
-import { Auth } from "../entity/auth.entity";
 
 @Injectable()
 export class PostAuthRefreshService

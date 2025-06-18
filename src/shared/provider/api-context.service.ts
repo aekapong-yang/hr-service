@@ -3,7 +3,7 @@ import { REQUEST } from "@nestjs/core";
 import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
 import { Payload } from "src/modules/auth/dto/response/auth-response.dto";
-import { BEARER } from "../constants/constant";
+import { BEARER } from "../constants/app-constant";
 import { ErrorCode } from "../constants/error-code/error-code";
 import { BusinessException } from "../exception/business.exception";
 

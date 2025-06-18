@@ -1,9 +1,9 @@
-import { IsDateString, IsEnum, IsOptional } from "class-validator";
-import { LeaveType } from "src/shared/constants/enum-constant";
+import { IsDateString, IsOptional } from "class-validator";
+import { IsNotBlank } from "src/shared/decorator/is-not-bank.decorator";
 
 export class PostLeaveAddRequest {
-  @IsEnum(LeaveType)
-  leaveType: LeaveType;
+  @IsNotBlank()
+  leaveType: string;
 
   @IsDateString()
   startDate: Date;

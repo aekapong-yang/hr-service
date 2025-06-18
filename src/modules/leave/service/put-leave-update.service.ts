@@ -1,12 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ApiStore } from "src/shared/constants/constant";
-import { Repository } from "typeorm";
 import { ClsService } from "nestjs-cls";
-import { PutLeaveUpdateRequest } from "../dto/request/put-leave-update.request";
-import { LeaveRequest } from "../entity/leave-request.entity";
+import { ApiStore } from "src/shared/constants/app-constant";
 import { ApiResponse } from "src/shared/dto/api-response";
 import { EmptyResponse } from "src/shared/dto/empty-response";
+import { LeaveRequest } from "src/shared/model/leave-request.entity";
+import { Repository } from "typeorm";
+import { PutLeaveUpdateRequest } from "../dto/request/put-leave-update.request";
 
 @Injectable()
 export class PutLeaveUpdateService

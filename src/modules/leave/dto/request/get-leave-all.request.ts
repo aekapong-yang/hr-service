@@ -1,5 +1,5 @@
 import { IsDateString, IsEnum, IsOptional } from "class-validator";
-import { DateType, LeaveType, OrderBy } from "src/shared/constants/enum-constant";
+import { DateType, OrderBy } from "src/shared/constants/enum-constant";
 
 export class GetLeaveAllRequest {
   @IsEnum(DateType)
@@ -9,7 +9,6 @@ export class GetLeaveAllRequest {
   date: Date;
 
   @IsOptional()
-  @IsEnum(LeaveType)
   leaveType: string;
 
   @IsOptional()

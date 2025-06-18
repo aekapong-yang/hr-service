@@ -1,7 +1,15 @@
 import { ClsStore } from "nestjs-cls";
-import { Code } from "./error-code/error-code.d";
 
 export const BEARER: string = "Bearer ";
+
+export type Code =
+  | 'success'
+  | 'invalid_parameter'
+  | 'not_found'
+  | 'unauthorized'
+  | 'general_error'
+  | 'internal_error'
+  | 'unknown_error';
 
 export interface ErrorResponse {
   code: Code;

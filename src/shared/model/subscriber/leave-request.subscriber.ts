@@ -1,10 +1,10 @@
-import { LeaveRequest } from "src/modules/leave/entity/leave-request.entity";
 import {
   EntitySubscriberInterface,
   EventSubscriber,
   InsertEvent,
   UpdateEvent,
 } from "typeorm";
+import { LeaveRequest } from "../leave-request.entity";
 
 @EventSubscriber()
 export class LeaveRequestSubscriber

@@ -24,21 +24,21 @@ export class LeaveController {
   async getLeaveAll(
     @Query() request: GetLeaveAllRequest,
   ): Promise<ApiResponse<GetLeaveAllResponse[]>> {
-    return await this.getLeaveAllService.execute(request);
+    return this.getLeaveAllService.execute(request);
   }
 
   @Get("/:leaveId")
   async getLeaveById(
     @Param("leaveId") leaveId: string,
   ): Promise<ApiResponse<GetLeaveAllResponse>> {
-    return await this.getLeaveByIdService.execute(leaveId);
+    return this.getLeaveByIdService.execute(leaveId);
   }
 
   @Post()
   async postLeaveAdd(
     @Body() request: PostLeaveAddRequest,
   ): Promise<ApiResponse<EmptyResponse>> {
-    return await this.postLeaveAddService.execute(request);
+    return this.postLeaveAddService.execute(request);
   }
 
   @Put("/:leaveId")
@@ -46,6 +46,6 @@ export class LeaveController {
     @Param("leaveId") leaveId: string,
     @Body() request: PutLeaveUpdateRequest,
   ):Promise<ApiResponse<EmptyResponse>> {
-   return await this.putLeaveUpdateService.execute({ leaveId, ...request });
+   return this.putLeaveUpdateService.execute({ leaveId, ...request });
   }
 }

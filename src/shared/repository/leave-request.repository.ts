@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { GetLeaveAllRequest } from "src/modules/leave/dto/request/get-leave-all.request";
 import { FindManyOptions, MoreThanOrEqual, Repository } from "typeorm";
-import { GetLeaveAllRequest } from "../dto/request/get-leave-all.request";
-import { LeaveRequest } from "../entity/leave-request.entity";
+import { LeaveRequest } from "../model/leave-request.entity";
 
 @Injectable()
 export class LeaveRequestRepository {

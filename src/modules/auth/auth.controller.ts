@@ -32,7 +32,7 @@ export class AuthController {
   async token(
     @Query() request: GetAuthTokenRequest,
   ): Promise<ApiResponse<TokenResponse>> {
-    return await this.getAuthTokenService.execute(request);
+    return this.getAuthTokenService.execute(request);
   }
 
   @Public()
@@ -40,7 +40,7 @@ export class AuthController {
   async logout(
     @Body() request: PostAuthLogoutRequest,
   ): Promise<ApiResponse<EmptyResponse>> {
-    return await this.postAuthLogoutService.execute(request);
+    return this.postAuthLogoutService.execute(request);
   }
 
   @Public()
@@ -48,6 +48,6 @@ export class AuthController {
   async refreshToken(
     @Body() request: PostAuthRefreshRequest,
   ): Promise<ApiResponse<TokenResponse>> {
-    return await this.postAuthRefreshService.execute(request);
+    return this.postAuthRefreshService.execute(request);
   }
 }

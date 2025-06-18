@@ -1,5 +1,5 @@
 import { HttpStatus } from "@nestjs/common";
-import { BEARER } from "../constant";
+import { BEARER } from "../app-constant";
 import { IErrorCode } from './error-code.d';
 
 export const ErrorCode = {

@@ -6,13 +6,13 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ClsModule } from "nestjs-cls";
 import { AuthModule } from "./modules/auth/auth.module";
 import { LeaveModule } from "./modules/leave/leave.module";
-import config from "./shared/config/database.config";
+import DatabaseConfig from "./shared/config/database.config";
 import { AuthGuard } from "./shared/guard/auth.guard";
 import { TokenService } from "./shared/provider/token.service";
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(config),
+    TypeOrmModule.forRoot(DatabaseConfig),
     ConfigModule.forRoot(),
     JwtModule.register({
       global: true,

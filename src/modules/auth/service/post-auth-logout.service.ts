@@ -4,10 +4,10 @@ import { ErrorCode } from "src/shared/constants/error-code/error-code";
 import { ApiResponse } from "src/shared/dto/api-response";
 import { EmptyResponse } from "src/shared/dto/empty-response";
 import { BusinessException } from "src/shared/exception/business.exception";
+import { Auth } from "src/shared/model/auth.entity";
 import { TokenService } from "src/shared/provider/token.service";
 import { Repository } from "typeorm";
 import { PostAuthLogoutRequest } from "../dto/request/post-auth-logout.request";
-import { Auth } from "../entity/auth.entity";
 
 @Injectable()
 export class PostAuthLogoutService

@@ -1,4 +1,4 @@
-import { Code } from "../constants/error-code";
+import { Code } from "../constants/app-constant";
 
 export class ApiResponse<T> {
   code: Code;
