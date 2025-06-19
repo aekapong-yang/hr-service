@@ -1,16 +1,16 @@
 import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { Public } from "src/shared/decorator/public.decorator";
+import { ApiResponse } from "src/shared/dto/api-response.dto";
+import { EmptyResponse } from "src/shared/types/empty-response";
 import { GetAuthTokenRequest } from "./dto/request/get-auth-token.request";
 import { PostAuthLogoutRequest } from "./dto/request/post-auth-logout.request";
 import { PostAuthRefreshRequest } from "./dto/request/post-auth-refresh.request";
+import { TokenResponse } from "./dto/response/auth-response.dto";
+import { GetAuthTokenResponse } from "./dto/response/get-auth-token-response";
 import { GetAuthLoginService } from "./service/get-auth-login.service";
 import { GetAuthTokenService } from "./service/get-auth-token.service";
 import { PostAuthLogoutService } from "./service/post-auth-logout.service";
 import { PostAuthRefreshService } from "./service/post-auth-refresh.service";
-import { GetAuthTokenResponse } from "./dto/response/get-auth-token-response";
-import { ApiResponse } from "src/shared/dto/api-response";
-import { TokenResponse } from "./dto/response/auth-response.dto";
-import { EmptyResponse } from "src/shared/dto/empty-response";
 
 @Controller("/v1/auth")
 export class AuthController {

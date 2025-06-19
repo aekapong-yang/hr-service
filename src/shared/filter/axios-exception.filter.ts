@@ -1,7 +1,8 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from "@nestjs/common";
 import { AxiosError } from "axios";
 import { Response } from "express";
-import { ErrorResponse } from "../constants/app-constant";
+import { Code } from "../constants/enum-constant";
+import { ErrorResponse } from "../types/types";
 
 @Catch(AxiosError)
 export class AxiosExceptionFilter implements ExceptionFilter {
@@ -12,7 +13,7 @@ export class AxiosExceptionFilter implements ExceptionFilter {
     const message = exception.response.data ?? "An unexpected error occurred";
 
     response.status(status).json({
-      code: "general_error",
+      code: Code.GENERAL_ERROR,
       message: message,
     } as ErrorResponse);
   }

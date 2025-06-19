@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
+import { ApiResponse } from "src/shared/dto/api-response.dto";
 import { GetAuthTokenResponse } from "../dto/response/get-auth-token-response";
-import { ApiResponse } from "src/shared/dto/api-response";
 
 @Injectable()
 export class GetAuthLoginService {

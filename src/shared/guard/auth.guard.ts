@@ -3,9 +3,9 @@ import { Reflector } from "@nestjs/core";
 import { Request } from "express";
 import { ClsService } from "nestjs-cls";
 import { Payload } from "src/modules/auth/dto/response/auth-response.dto";
-import { ApiStore } from "../constants/app-constant";
 import { IS_PUBLIC_KEY } from "../decorator/public.decorator";
 import { TokenService } from "../provider/token.service";
+import { ApiStore } from "../types/types";
 
 @Injectable()
 export class AuthGuard implements CanActivate {

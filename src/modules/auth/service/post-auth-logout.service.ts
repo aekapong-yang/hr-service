@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ErrorCode } from "src/shared/constants/error-code/error-code";
-import { ApiResponse } from "src/shared/dto/api-response";
-import { EmptyResponse } from "src/shared/dto/empty-response";
+import { ErrorCode } from "src/shared/constants/error-code.constant";
+import { ApiResponse } from "src/shared/dto/api-response.dto";
 import { BusinessException } from "src/shared/exception/business.exception";
 import { Auth } from "src/shared/model/auth.entity";
 import { TokenService } from "src/shared/provider/token.service";
+import { EmptyResponse } from "src/shared/types/empty-response";
 import { Repository } from "typeorm";
 import { PostAuthLogoutRequest } from "../dto/request/post-auth-logout.request";
 

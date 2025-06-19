@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { plainToInstance } from "class-transformer";
-import { ErrorCode } from "src/shared/constants/error-code/error-code";
-import { ApiResponse } from "src/shared/dto/api-response";
+import { ErrorCode } from "src/shared/constants/error-code.constant";
+import { ApiResponse } from "src/shared/dto/api-response.dto";
 import { BusinessException } from "src/shared/exception/business.exception";
 import { LeaveRequest } from "src/shared/model/leave-request.entity";
 import { Repository } from "typeorm";
@@ -20,10 +20,7 @@ export class GetLeaveByIdService
   async execute(leaveId: string): Promise<ApiResponse<GetLeaveAllResponse>> {
     const leaveRequest = await this.leaveRepository.findOneBy({ leaveId });
     if (!leaveRequest) {
-      throw new BusinessException(
-        ErrorCode.NOT_FOUND,
-        `Leave request ${leaveId}`,
-      );
+      throw new BusinessException(ErrorCode.NOT_FOUND);
     }
     const response = plainToInstance(GetLeaveAllResponse, leaveRequest);
     console.log(response);

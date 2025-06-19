@@ -24,3 +24,13 @@ export enum UserStatus {
 export enum SettingGroup {
   LEAVE_TYPE = "LEAVE_TYPE",
 }
+
+export enum Code {
+  SUCCESS = 'success',
+  INVALID_PARAMETER = 'invalid_parameter',
+  NOT_FOUND = 'not_found',
+  UNAUTHORIZED = 'unauthorized',
+  GENERAL_ERROR = 'general_error',
+  INTERNAL_ERROR = 'internal_error',
+  UNKNOWN_ERROR = 'unknown_error',
+}

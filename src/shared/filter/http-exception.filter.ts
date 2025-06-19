@@ -4,11 +4,15 @@ import {
   Catch,
   ExceptionFilter,
   HttpException,
+  HttpStatus,
   NotFoundException,
 } from "@nestjs/common";
 import { Request, Response } from "express";
-import { ErrorResponse, GlobalErrorMessage } from "../constants/app-constant";
+import { Code } from "../constants/enum-constant";
+import { ErrorCode } from "../constants/error-code.constant";
+import { ApiResponse } from "../dto/api-response.dto";
 import { BusinessException } from "../exception/business.exception";
+import { GlobalErrorMessage } from "../types/types";
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -17,32 +21,31 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    const error: ErrorResponse = toErrorResponse(exception);
-    response.status(exception.getStatus()).json(error);
+    const errorMessage: ApiResponse<{}> = toApiResponse(exception);
+    response.status(exception.getStatus()).json(errorMessage);
   }
 }
 
-function toErrorResponse(exception: HttpException): ErrorResponse {
+function toApiResponse(exception: HttpException): ApiResponse<{}> {
   if (exception instanceof BadRequestException) {
-    return {
-      code: "invalid_parameter",
+    return ApiResponse.error({
+      code: Code.INVALID_PARAMETER,
       message: (exception.getResponse() as GlobalErrorMessage).message[0],
-    };
+      httpStatus: HttpStatus.BAD_REQUEST,
+    });
   }
 
   if (exception instanceof NotFoundException) {
-    return {
-      code: "not_found",
+    return ApiResponse.error({
+      code: Code.NOT_FOUND,
       message: (exception.getResponse() as GlobalErrorMessage).message,
-    };
+      httpStatus: HttpStatus.NOT_FOUND,
+    });
   }
 
   if (exception instanceof BusinessException) {
-    return {
-      code: exception.code,
-      message: exception.message,
-    };
+    return ApiResponse.error(exception.errorCode);
   }
 
-  return { code: "general_error", message: "An unexpected error occurred" };
+  return ApiResponse.error(ErrorCode.GENERAL_ERROR);
 }

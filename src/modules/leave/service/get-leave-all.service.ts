@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { SettingGroup } from "src/shared/constants/enum-constant";
-import { ApiResponse } from "src/shared/dto/api-response";
+import { ApiResponse } from "src/shared/dto/api-response.dto";
 import { LeaveRequest } from "src/shared/model/leave-request.entity";
 import { LeaveRequestRepository } from "src/shared/repository/leave-request.repository";
 import { SettingRepository } from "src/shared/repository/setting.repository";

@@ -3,8 +3,8 @@ import { REQUEST } from "@nestjs/core";
 import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
 import { Payload } from "src/modules/auth/dto/response/auth-response.dto";
-import { BEARER } from "../constants/app-constant";
-import { ErrorCode } from "../constants/error-code/error-code";
+import { Bearer } from "../constants/constant";
+import { ErrorCode } from "../constants/error-code.constant";
 import { BusinessException } from "../exception/business.exception";
 
 @Injectable({ scope: Scope.REQUEST })
@@ -31,7 +31,7 @@ export class ApiContextService {
       throw new BusinessException(ErrorCode.INVALID_ACCESS_TOKEN);
     }
 
-    if (!authHeader.startsWith(BEARER)) {
+    if (!authHeader.startsWith(Bearer)) {
       throw new BusinessException(ErrorCode.INVALID_BEARER_START_WITH);
     }
 

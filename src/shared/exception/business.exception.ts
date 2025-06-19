@@ -1,15 +1,15 @@
-import { HttpException, HttpStatus } from "@nestjs/common";
-import { Code, IErrorCode } from "../constants/error-code/error-code.d";
+import { HttpException } from "@nestjs/common";
+import { ErrorResponse } from "../types/types";
 
 export class BusinessException extends HttpException {
-  readonly code: Code;
-  readonly httpStatus: HttpStatus;
+  readonly errorCode: ErrorResponse;
 
-  constructor({ code, message, httpStatus }: IErrorCode, ...params: string[]) {
-    super(message(...params), httpStatus);
-
-    this.code = code;
-    this.httpStatus = httpStatus;
+  constructor(errorCode: ErrorResponse, message?: string) {
+    super(message ?? errorCode.message, errorCode.httpStatus);
+    this.errorCode = {
+      code: errorCode.code,
+      message: message ?? errorCode.message,
+      httpStatus: errorCode.httpStatus,
+    };
   }
-  
 }
