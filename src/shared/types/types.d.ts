@@ -1,6 +1,6 @@
 import { HttpStatus } from "@nestjs/common";
 import { ClsStore } from "nestjs-cls";
-import { Code } from "../constants/enum-constant";
+import { Code } from "../constants/app-constant";
 
 export type ErrorResponse = {
   code: Code;
@@ -16,4 +16,9 @@ export interface ApiStore extends ClsStore {
   userId: string;
   username: string;
   email: string;
+}
+
+export type ValueLabel = {
+  value:string,
+  label:string
 }

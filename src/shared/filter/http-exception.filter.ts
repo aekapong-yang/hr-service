@@ -8,8 +8,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { Request, Response } from "express";
-import { Code } from "../constants/enum-constant";
-import { ErrorCode } from "../constants/error-code.constant";
+import { Code, ErrorCode } from "../constants/error-code";
 import { ApiResponse } from "../dto/api-response.dto";
 import { BusinessException } from "../exception/business.exception";
 import { GlobalErrorMessage } from "../types/types";

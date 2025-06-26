@@ -5,10 +5,10 @@ import {
   Payload,
   TokenResponse,
 } from "src/modules/auth/dto/response/auth-response.dto";
-import { Bearer } from "../constants/constant";
-import { ErrorCode } from "../constants/error-code.constant";
+import { ErrorCode } from "../constants/error-code";
 import { BusinessException } from "../exception/business.exception";
 import { Auth } from "../model/auth.entity";
+import { AppConstant } from "../constants/app-constant";
 
 @Injectable()
 export class TokenService {
@@ -62,7 +62,7 @@ export class TokenService {
       throw new BusinessException(ErrorCode.INVALID_ACCESS_TOKEN);
     }
 
-    if (!authHeader.startsWith(Bearer)) {
+    if (!authHeader.startsWith(AppConstant.BEAERE)) {
       throw new BusinessException(ErrorCode.INVALID_BEARER_START_WITH);
     }
 

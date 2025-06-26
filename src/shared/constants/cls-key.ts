@@ -1,0 +1,5 @@
+export enum ClsKey {
+  USER_ID_KEY = 'USER_ID_KEY',
+  USER_NAME_KEY = 'USER_NAME_KEY',
+  EMAIL_KEY = 'EMAIL_KEY',
+}

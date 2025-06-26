@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ClsService } from "nestjs-cls";
+import { ErrorCode } from "src/shared/constants/error-code";
 import { ApiResponse } from "src/shared/dto/api-response.dto";
+import { BusinessException } from "src/shared/exception/business.exception";
 import { LeaveRequest } from "src/shared/model/leave-request.entity";
 import { EmptyResponse } from "src/shared/types/empty-response";
-import { ApiStore } from "src/shared/types/types";
 import { Repository } from "typeorm";
 import { PutLeaveUpdateRequest } from "../dto/request/put-leave-update.request";
 
@@ -16,12 +16,18 @@ export class PutLeaveUpdateService
   constructor(
     @InjectRepository(LeaveRequest)
     private readonly leaveRepository: Repository<LeaveRequest>,
-    private readonly cls: ClsService<ApiStore>,
   ) {}
 
   async execute(
     request: PutLeaveUpdateRequest,
   ): Promise<ApiResponse<EmptyResponse>> {
+    const { leaveId, ...requestData } = request;
+    const leaveRequest = await this.leaveRepository.findOneBy({ leaveId });
+    if (!leaveRequest) {
+      throw new BusinessException(ErrorCode.NOT_FOUND);
+    }
+
+    await this.leaveRepository.update({ leaveId }, requestData);
     return ApiResponse.success();
   }
 }

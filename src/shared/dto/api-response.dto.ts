@@ -1,4 +1,4 @@
-import { Code } from "../constants/enum-constant";
+import { Code } from "../constants/error-code";
 import { ErrorResponse } from "../types/types";
 
 export class ApiResponse<T> {
@@ -7,10 +7,12 @@ export class ApiResponse<T> {
   data?: T;
 
   static success<T>(data?: T): ApiResponse<T> {
+    const hasData = data !== undefined && (Array.isArray(data) ? true : Object.keys(data as object).length > 0);
+
     return {
       code: Code.SUCCESS,
       message: "success",
-      ...(data && Object.keys(data as object).length ? { data } : {}),
+        ...(hasData ? { data } : {}),
     };
   }
 

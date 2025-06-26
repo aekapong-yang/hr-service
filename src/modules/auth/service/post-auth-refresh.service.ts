@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ErrorCode } from "src/shared/constants/error-code.constant";
+import { ErrorCode } from "src/shared/constants/error-code";
 import { ApiResponse } from "src/shared/dto/api-response.dto";
 import { BusinessException } from "src/shared/exception/business.exception";
 import { Auth } from "src/shared/model/auth.entity";

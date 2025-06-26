@@ -1,5 +1,5 @@
 import { IsDateString, IsEnum, IsOptional } from "class-validator";
-import { DateType, OrderBy } from "src/shared/constants/enum-constant";
+import { DateType, OrderBy } from "src/shared/constants/app-constant";
 
 export class GetLeaveAllRequest {
   @IsEnum(DateType)

@@ -1,14 +1,15 @@
 import { HttpStatus } from "@nestjs/common";
 import { ErrorResponse } from "../types/types";
-import { Bearer } from "./constant";
-import { Code } from "./enum-constant";
+import { AppConstant } from "./app-constant";
 
-function error(
-  code: Code,
-  message: string,
-  httpStatus: HttpStatus,
-): ErrorResponse {
-  return { code, message: message, httpStatus };
+export enum Code {
+  SUCCESS = 'success',
+  INVALID_PARAMETER = 'invalid_parameter',
+  NOT_FOUND = 'not_found',
+  UNAUTHORIZED = 'unauthorized',
+  GENERAL_ERROR = 'general_error',
+  INTERNAL_ERROR = 'internal_error',
+  UNKNOWN_ERROR = 'unknown_error',
 }
 
 export const ErrorCode = {
@@ -28,7 +29,7 @@ export const ErrorCode = {
 
   INVALID_BEARER_START_WITH: error(
     Code.UNAUTHORIZED,
-    `Authorization header must start with "${Bearer}"`,
+    `Authorization header must start with "${AppConstant.BEAERE}"`,
     HttpStatus.UNAUTHORIZED,
   ),
 
@@ -50,3 +51,11 @@ export const ErrorCode = {
     HttpStatus.BAD_REQUEST,
   ),
 } as const;
+
+function error(
+  code: Code,
+  message: string,
+  httpStatus: HttpStatus,
+): ErrorResponse {
+  return { code, message: message, httpStatus };
+}

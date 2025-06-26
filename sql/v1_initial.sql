@@ -19,11 +19,14 @@ CREATE TABLE leave_request (
     end_date DATE NOT NULL,
     reason VARCHAR(500),
     status VARCHAR(10) NOT NULL,
+    is_auto BOOLEAN NOT NULL DEFAULT FALSE,
+    auto_approve_at DATETIME,
     created_by VARCHAR(40) NOT NULL,
     updated_by VARCHAR(40) NOT NULL,
     approved_by VARCHAR(40) NULL,
     created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL
+    updated_at DATETIME NOT NULL,
+    approved_at DATETIME
 );
 
 CREATE TABLE setting (

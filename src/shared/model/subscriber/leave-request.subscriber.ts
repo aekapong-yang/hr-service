@@ -5,6 +5,8 @@ import {
   UpdateEvent,
 } from "typeorm";
 import { LeaveRequest } from "../leave-request.entity";
+import { ClsServiceManager } from "nestjs-cls";
+import { ApiStore } from "src/shared/types/types";
 
 @EventSubscriber()
 export class LeaveRequestSubscriber
@@ -15,8 +17,8 @@ export class LeaveRequestSubscriber
   }
 
   beforeInsert(event: InsertEvent<LeaveRequest>) {
-    const userId = "sss";
-    const username = "ss";
+    const userId = ClsServiceManager.getClsService<ApiStore>().get('userId');
+    const username = ClsServiceManager.getClsService<ApiStore>().get('username');
     if (event.entity) {
       event.entity.userId = userId;
       event.entity.username = username;
@@ -30,7 +32,7 @@ export class LeaveRequestSubscriber
   }
 
   beforeUpdate(event: UpdateEvent<LeaveRequest>) {
-    const userId = "ss";
+    const userId = ClsServiceManager.getClsService<ApiStore>().get('userId');
     if (event.entity) {
       event.entity.updatedBy = userId;
       event.entity.updatedAt = new Date();

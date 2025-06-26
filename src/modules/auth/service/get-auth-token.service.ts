@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { UserStatus } from "src/shared/constants/enum-constant";
 import { ApiResponse } from "src/shared/dto/api-response.dto";
 import { Auth } from "src/shared/model/auth.entity";
 import { OAuthService } from "src/shared/provider/microsoft/oauth.service";
@@ -8,6 +7,7 @@ import { TokenService } from "src/shared/provider/token.service";
 import { Repository } from "typeorm";
 import { GetAuthTokenRequest } from "../dto/request/get-auth-token.request";
 import { TokenResponse } from "../dto/response/auth-response.dto";
+import { UserStatus } from "src/shared/constants/app-constant";
 
 @Injectable()
 export class GetAuthTokenService

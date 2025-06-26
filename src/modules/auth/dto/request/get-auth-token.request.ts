@@ -1,4 +1,4 @@
-import { IsNotBlank } from "src/shared/decorator/is-not-bank.decorator";
+import { IsNotBlank } from "src/shared/validator/is-not-bank.validator";
 
 export class GetAuthTokenRequest {
   @IsNotBlank()

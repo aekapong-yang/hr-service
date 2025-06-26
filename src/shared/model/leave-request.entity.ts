@@ -27,6 +27,12 @@ export class LeaveRequest {
   @Column({ name: "status" })
   status: string;
 
+  @Column({ name: "is_auto" })
+  isAuto: boolean;
+
+  @Column({ name: "auto_approve_at", type: "datetime" })
+  autoApproveAt: Date;
+
   @Column({ name: "created_by" })
   createdBy: string;
 
@@ -41,4 +47,7 @@ export class LeaveRequest {
 
   @Column({ name: "updated_at", type: "datetime" })
   updatedAt: Date;
+
+  @Column({ name: "approved_at", type: "datetime" })
+  approvedAt: Date;
 }

@@ -1,8 +1,8 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from "@nestjs/common";
 import { AxiosError } from "axios";
 import { Response } from "express";
-import { Code } from "../constants/enum-constant";
 import { ErrorResponse } from "../types/types";
+import { Code } from "../constants/error-code";
 
 @Catch(AxiosError)
 export class AxiosExceptionFilter implements ExceptionFilter {
