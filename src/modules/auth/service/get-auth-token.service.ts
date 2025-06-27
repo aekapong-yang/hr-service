@@ -44,6 +44,9 @@ export class GetAuthTokenService
           status: UserStatus.ACTIVE,
         });
       }
+      else {
+        auth = result;
+      }
     }
 
     const token = await this.tokenService.generateToken(auth);
