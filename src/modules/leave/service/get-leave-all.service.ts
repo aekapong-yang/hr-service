@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { ApiResponse } from "src/shared/dto/api-response.dto";
-import { LeaveRequest } from "src/shared/model/leave-request.entity";
+import { LeaveRequest } from "src/shared/entity/leave-request.entity";
+import { UtilCacheService } from "src/shared/provider/util-cache.service";
 import { LeaveRequestRepository } from "src/shared/repository/leave-request.repository";
 import { GetLeaveAllRequest } from "../dto/request/get-leave-all.request";
 import { GetLeaveAllResponse } from "../dto/response/get-leave-all.response";
-import { UtilCacheService } from "src/shared/provider/util-cache.service";
 
 @Injectable()
 export class GetLeaveAllService
@@ -41,8 +41,7 @@ export class GetLeaveAllService
         label: leaveTypeMap.get(leave.leaveType) ?? "",
         value: leave.leaveType,
       },
-      userId: leave.userId,
-      username: leave.username,
+      employeeId: leave.employeeId,
       startDate: leave.startDate,
       endDate: leave.endDate,
       reason: leave.reason,

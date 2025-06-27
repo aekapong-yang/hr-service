@@ -1,11 +1,10 @@
 CREATE TABLE user (
     user_id VARCHAR(40) PRIMARY KEY,
     username VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
     status VARCHAR(10) NOT NULL,
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL,
-    last_login DATETIME NOT NULL,
     access_token VARCHAR(1000),
     refresh_token VARCHAR(1000)
 );
@@ -23,13 +22,12 @@ CREATE TABLE user_role (
 
 CREATE TABLE employee (
     employee_id VARCHAR(40) PRIMARY KEY,
-    user_id VARCHAR(40),
     full_name VARCHAR(100),
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     position VARCHAR(100),
     department VARCHAR(100),
-    email VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
     phone VARCHAR(20),
     line_user_id VARCHAR(100),
     line_group_id VARCHAR(100),

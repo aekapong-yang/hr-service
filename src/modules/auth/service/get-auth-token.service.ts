@@ -1,28 +1,28 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { UserStatus } from "src/shared/constants/app-constant";
 import { ApiResponse } from "src/shared/dto/api-response.dto";
-import { Auth } from "src/shared/model/auth.entity";
+import { User } from "src/shared/entity/user.entity";
 import { OAuthService } from "src/shared/provider/microsoft/oauth.service";
 import { TokenService } from "src/shared/provider/token.service";
 import { Repository } from "typeorm";
 import { GetAuthTokenRequest } from "../dto/request/get-auth-token.request";
 import { TokenResponse } from "../dto/response/auth-response.dto";
-import { UserStatus } from "src/shared/constants/app-constant";
 
 @Injectable()
 export class GetAuthTokenService
   implements BaseService<GetAuthTokenRequest, Promise<ApiResponse<TokenResponse>>>
 {
   constructor(
-    @InjectRepository(Auth)
-    private readonly authRepository: Repository<Auth>,
+    @InjectRepository(User)
+    private readonly authRepository: Repository<User>,
     private readonly tokenService: TokenService,
     private readonly oAuthService: OAuthService,
   ) {}
 
   async execute(request: GetAuthTokenRequest): Promise<ApiResponse<TokenResponse>> {
     const { code } = request;
-    let auth: Auth;
+    let auth: User;
     if (process.env.MS_AUTH_BYPASS === "true") {
       auth = this.authRepository.create({
         userId: code,
@@ -54,7 +54,6 @@ export class GetAuthTokenService
       ...auth,
       accessToken: token.accessToken,
       refreshToken: token.refreshToken,
-      lastLogin: new Date(),
     });
 
     await this.authRepository.save(create);

@@ -39,5 +39,6 @@ export class AuthGuard implements CanActivate {
     this.cls.set("userId", payload.userId);
     this.cls.set("username", payload.username);
     this.cls.set("email", payload.email);
+    this.cls.set("employeeId", payload.employeeId);
   }
 }

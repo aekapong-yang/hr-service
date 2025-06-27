@@ -14,6 +14,7 @@ export type GlobalErrorMessage = {
 
 export interface ApiStore extends ClsStore {
   userId: string;
+  employeeId: string;
   username: string;
   email: string;
 }

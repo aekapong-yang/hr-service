@@ -2,8 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ErrorCode } from "src/shared/constants/error-code";
 import { ApiResponse } from "src/shared/dto/api-response.dto";
+import { LeaveRequest } from "src/shared/entity/leave-request.entity";
 import { BusinessException } from "src/shared/exception/business.exception";
-import { LeaveRequest } from "src/shared/model/leave-request.entity";
 import { UtilCacheService } from "src/shared/provider/util-cache.service";
 import { Repository } from "typeorm";
 import { GetLeaveAllResponse } from "../dto/response/get-leave-all.response";
@@ -33,13 +33,25 @@ export class GetLeaveByIdService
     leaveRequest: LeaveRequest,
     leaveTypeMap: Map<string, string>,
   ): GetLeaveByIdResponse {
-    const {...leaves} = leaveRequest
     return {
-      ...leaves,
+      leaveId: leaveRequest.leaveId,
+      employeeId: leaveRequest.employeeId,
       leaveType: {
         label: leaveTypeMap.get(leaveRequest.leaveType) ?? "",
         value: leaveRequest.leaveType,
-      }
+      },
+      startDate: leaveRequest.startDate,
+      endDate: leaveRequest.endDate,
+      reason: leaveRequest.reason,
+      status: leaveRequest.status,
+      isAuto: leaveRequest.isAuto,
+      autoApproveAt: leaveRequest.autoApproveAt,
+      createdBy: leaveRequest.createdBy,
+      updatedBy: leaveRequest.updatedBy,
+      approvedBy: leaveRequest.approvedBy,
+      createdAt: leaveRequest.createdAt,
+      updatedAt: leaveRequest.updatedAt,
+      approvedAt: leaveRequest.approvedAt,
     };
   }
 }

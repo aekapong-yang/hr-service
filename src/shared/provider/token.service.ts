@@ -1,3 +1,4 @@
+import { Employee } from "./../entity/employee.entity";
 import { Injectable } from "@nestjs/common";
 import { JsonWebTokenError, JwtService, TokenExpiredError } from "@nestjs/jwt";
 import { Request } from "express";
@@ -5,20 +6,30 @@ import {
   Payload,
   TokenResponse,
 } from "src/modules/auth/dto/response/auth-response.dto";
-import { ErrorCode } from "../constants/error-code";
-import { BusinessException } from "../exception/business.exception";
-import { Auth } from "../model/auth.entity";
 import { AppConstant } from "../constants/app-constant";
+import { ErrorCode } from "../constants/error-code";
+import { User } from "../entity/user.entity";
+import { BusinessException } from "../exception/business.exception";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class TokenService {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    @InjectRepository(Employee)
+    private readonly employeeRepository: Repository<Employee>,
+  ) {}
 
-  async generateToken(auth: Auth): Promise<TokenResponse> {
+  async generateToken(auth: User): Promise<TokenResponse> {
+    const employee = await this.employeeRepository.findOneBy({
+      email: auth.email,
+    });
     const payload: Payload = {
       userId: auth.userId,
       username: auth.username,
       email: auth.email,
+      employeeId: employee?.employeeId ?? "",
     };
 
     return {

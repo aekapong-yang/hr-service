@@ -2,18 +2,18 @@ import { Inject, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Between, Repository } from "typeorm";
 
-import { ApiResponse } from "src/shared/dto/api-response.dto";
-import { LeaveRequest } from "src/shared/model/leave-request.entity";
-import { EmptyResponse } from "src/shared/types/empty-response";
-import { PostLeaveAddRequest } from "../dto/request/post-leave-add.request";
-import { Cache } from "cache-manager";
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
+import { Cache } from "cache-manager";
 import dayjs from "dayjs";
-import { UtilCacheService } from "src/shared/provider/util-cache.service";
 import { ClsService } from "nestjs-cls";
-import { ApiStore } from "src/shared/types/types";
-import { CacheKey } from "src/shared/constants/cache-key";
 import { LeaveStatus } from "src/shared/constants/app-constant";
+import { CacheKey } from "src/shared/constants/cache-key";
+import { ApiResponse } from "src/shared/dto/api-response.dto";
+import { LeaveRequest } from "src/shared/entity/leave-request.entity";
+import { UtilCacheService } from "src/shared/provider/util-cache.service";
+import { EmptyResponse } from "src/shared/types/empty-response";
+import { ApiStore } from "src/shared/types/types";
+import { PostLeaveAddRequest } from "../dto/request/post-leave-add.request";
 
 @Injectable()
 export class PostLeaveAddService
@@ -32,10 +32,12 @@ export class PostLeaveAddService
   async execute(
     request: PostLeaveAddRequest,
   ): Promise<ApiResponse<EmptyResponse>> {
+    const employeeId = this.clsService.get("employeeId");
     const leaveRequest = this.leaveRepository.create({
       ...request,
+      employeeId: employeeId,
       status: LeaveStatus.PENDING,
-      autoApproveAt: await this.getAutoApproveAt(),
+      autoApproveAt: await this.getAutoApproveAt(employeeId),
     });
 
     await this.leaveRepository.insert(leaveRequest);
@@ -44,15 +46,15 @@ export class PostLeaveAddService
     return ApiResponse.success();
   }
 
-  async getAutoApproveAt(): Promise<Date> {
+  async getAutoApproveAt(employeeId: string): Promise<Date> {
     const start = dayjs().startOf("year").toDate();
     const end = dayjs().endOf("year").toDate();
     const leaveCount = await this.leaveRepository.countBy({
-      userId: this.clsService.get("userId"),
+      employeeId: employeeId,
       createdAt: Between(start, end),
     });
 
-    const autoApproveAtMap = 
+    const autoApproveAtMap =
       await this.utilCacheService.getCacheAutoApproveAt();
     const keys = Array.from(autoApproveAtMap.keys()).sort(
       (a, b) => Number(a) - Number(b),
@@ -62,8 +64,7 @@ export class PostLeaveAddService
     for (const key of keys) {
       if (leaveCount >= Number(key)) {
         matchedKey = key;
-      } 
-      else {
+      } else {
         break;
       }
     }

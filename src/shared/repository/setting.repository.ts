@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Setting } from "src/shared/model/setting.entity";
+import { Setting } from "src/shared/entity/setting.entity";
 import { Equal, FindManyOptions, Repository } from "typeorm";
 
 @Injectable()

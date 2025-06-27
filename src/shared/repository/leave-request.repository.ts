@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import dayjs from "dayjs";
 import { GetLeaveAllRequest } from "src/modules/leave/dto/request/get-leave-all.request";
 import { Repository } from "typeorm";
-import { LeaveRequest } from "../model/leave-request.entity";
-import dayjs from "dayjs";
 import { DateType } from "../constants/app-constant";
+import { LeaveRequest } from "../entity/leave-request.entity";
 
 @Injectable()
 export class LeaveRequestRepository {

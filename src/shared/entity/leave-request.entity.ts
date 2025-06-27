@@ -1,16 +1,14 @@
 import { Column, Entity, Generated, PrimaryColumn } from "typeorm";
+import { Audit } from "./subscriber/audit";
 
 @Entity({ name: "leave_request" })
-export class LeaveRequest {
+export class LeaveRequest extends Audit {
   @Generated("uuid")
   @PrimaryColumn({ name: "leave_id" })
   leaveId: string;
 
-  @Column({ name: "user_id" })
-  userId: string;
-
-  @Column({ name: "username" })
-  username: string;
+  @Column({ name: "employee_id" })
+  employeeId: string;
 
   @Column({ name: "leave_type" })
   leaveType: string;
@@ -33,20 +31,8 @@ export class LeaveRequest {
   @Column({ name: "auto_approve_at", type: "datetime" })
   autoApproveAt: Date;
 
-  @Column({ name: "created_by" })
-  createdBy: string;
-
-  @Column({ name: "updated_by" })
-  updatedBy: string;
-
   @Column({ name: "approved_by" })
   approvedBy: string;
-
-  @Column({ name: "created_at", type: "datetime" })
-  createdAt: Date;
-
-  @Column({ name: "updated_at", type: "datetime" })
-  updatedAt: Date;
 
   @Column({ name: "approved_at", type: "datetime" })
   approvedAt: Date;

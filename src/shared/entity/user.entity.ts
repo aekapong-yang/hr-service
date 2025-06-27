@@ -6,8 +6,8 @@ import {
   PrimaryColumn,
 } from "typeorm";
 
-@Entity({ name: "auth" })
-export class Auth {
+@Entity({ name: "user" })
+export class User {
   @PrimaryColumn({ name: "user_id" })
   userId: string;
 
@@ -31,9 +31,6 @@ export class Auth {
 
   @Column({ name: "updated_at", type: "datetime" })
   updatedAt: Date;
-
-  @Column({ name: "last_login", type: "datetime" })
-  lastLogin: Date;
 
   @BeforeInsert()
   setCreatedAt() {

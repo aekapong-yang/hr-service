@@ -2,8 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ErrorCode } from "src/shared/constants/error-code";
 import { ApiResponse } from "src/shared/dto/api-response.dto";
+import { User } from "src/shared/entity/user.entity";
 import { BusinessException } from "src/shared/exception/business.exception";
-import { Auth } from "src/shared/model/auth.entity";
 import { TokenService } from "src/shared/provider/token.service";
 import { EmptyResponse } from "src/shared/types/empty-response";
 import { Repository } from "typeorm";
@@ -14,8 +14,8 @@ export class PostAuthLogoutService
   implements BaseService<PostAuthLogoutRequest, Promise<ApiResponse<EmptyResponse>>>
 {
   constructor(
-    @InjectRepository(Auth)
-    private readonly authRepository: Repository<Auth>,
+    @InjectRepository(User)
+    private readonly authRepository: Repository<User>,
     private readonly tokenService: TokenService,
   ) {}
 

@@ -2,8 +2,7 @@ import { ValueLabel } from "src/shared/types/types";
 
 export class GetLeaveByIdResponse {
   leaveId: string;
-  userId: string;
-  username: string;
+  employeeId: string;
   leaveType: ValueLabel;
   startDate: Date;
   endDate: Date;

@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { Cron } from "@nestjs/schedule";
 import { InjectRepository } from "@nestjs/typeorm";
-import { LessThanOrEqual, Repository } from "typeorm";
-import { LeaveRequest } from "../../shared/model/leave-request.entity";
 import { AppConstant, LeaveStatus } from "src/shared/constants/app-constant";
+import { LessThanOrEqual, Repository } from "typeorm";
+import { LeaveRequest } from "../../shared/entity/leave-request.entity";
 
 @Injectable()
 export class TasksService {
